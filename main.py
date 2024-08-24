@@ -9,7 +9,7 @@ price = price.set_index("date")
 
 
 # Генерация полного отчета со всеми графиками и метриками с базовыми настройками в формате html
-qs.reports.html(price["pct"], title="Your_title", output="Output/Your_file_name.html")
+qs.reports.html(price["pct"], title="Your_title", output="Your_directory/Your_file_name.html")
 
 
 # Генерация полного отчета со всеми графиками и метриками с базовыми настройками прямо в IDE
@@ -19,12 +19,11 @@ qs.reports.full(price["pct"])
 # Расчет CAGR для каждого года
 yearly_returns = price["pct"].groupby(pd.Grouper(freq='Y'))
 cagr_yearly = yearly_returns.apply(lambda x: qs.stats.cagr(x)) * 100
-cagr_yearly.to_csv("Output/Your_file_name.csv")
+cagr_yearly.to_csv("Your_directory/Your_file_name.csv")
 
 
 # Вывод avg_return
 print(qs.stats.avg_return(price["pct"]))
-
 
 
 # Вывод графика monthly_heatmap
@@ -40,7 +39,7 @@ print(qs.stats.calmar(price["pct"]))
 
 # Сохранение drawdown_details в формат .csv для удобства чтения
 drawdown_details = qs.stats.drawdown_details(price["pct"])
-drawdown_details.to_csv('drawdown_details.csv', index=False)
+drawdown_details.to_csv('Your_directory/drawdown_details.csv', index=False)
 
 
 # Вывод exposure
@@ -53,7 +52,7 @@ print(qs.stats.max_drawdown(price["pct"]))
 
 # Сохранение monthly_returns в формат .csv для удобства чтения
 monthly_returns = qs.stats.monthly_returns(price["pct"])
-monthly_returns.to_csv('monthly_returns.csv', index=False)
+monthly_returns.to_csv('Your_directory/monthly_returns.csv', index=False)
 
 
 # Коэффициент Шарпа
