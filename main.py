@@ -2,13 +2,16 @@ import pandas as pd
 import quantstats as qs
 qs.extend_pandas()
 
-price = pd.read_csv("Your_file.csv")
+# Вместо Your_file.csv вставьте Ваш файл
+price = pd.read_csv("example.csv")
 price["pct"] = (100000.0 + price["cumm_pnl"]).pct_change()
 price["date"] = pd.to_datetime(price["date"], format="%Y-%m-%d")
 price = price.set_index("date")
 
 
 # Генерация полного отчета со всеми графиками и метриками с базовыми настройками в формате html
+# Вместо Your_title укажите название отчета
+# Вместо Your_directory/Your_file_name.html укажите Вашу директорию и название файла, которое хотите
 qs.reports.html(price["pct"], title="Your_title", output="Your_directory/Your_file_name.html")
 
 
@@ -23,7 +26,7 @@ cagr_yearly.to_csv("Your_directory/Your_file_name.csv")
 
 
 # Вывод avg_return
-print(qs.stats.avg_return(price["pct"]))
+# print(qs.stats.avg_return(price["pct"]))
 
 
 # Вывод графика monthly_heatmap
@@ -56,7 +59,7 @@ monthly_returns.to_csv('Your_directory/monthly_returns.csv', index=False)
 
 
 # Коэффициент Шарпа
-print(qs.stats.sharpe(price["pct"]))
+print(qs.stats.sharpe(price["pct"], periods=365))
 
 
 # Sortino
@@ -71,6 +74,8 @@ qs.plots.drawdown(price["pct"], show=True)
 qs.plots.drawdowns_periods(price["pct"], show=True)
 
 
-
+# Пример отчета о компании Apple
+returns = qs.utils.download_returns('AAPL')
+qs.reports.html(returns, title="Apple report", output='Output/Apple_report.html')
 
 
